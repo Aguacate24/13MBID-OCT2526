@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
+from ydata_profiling import ProfileReport
 
 def visualize_data(datos_creditos: str = "data/raw/datos_creditos.csv",
                     datos_tarjetas: str = "data/raw/datos_tarjetas.csv",
@@ -57,10 +58,29 @@ def visualize_data(datos_creditos: str = "data/raw/datos_creditos.csv",
     plt.savefig(output_dir / 'correlation_heatmap_tarjetas.png')
     plt.close()
 
-    ##################################################################################s
-    # TODO: Agregar al menos dos (2) gráficos adicionales que consideren variables.
-    # OPCIÓN EXTRA (ejemplo):  agregar la generación del reporte con ydata-profiling.
-    ##################################################################################
+    # Gráfico de distribución de la edad vs mora
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data=df_creditos, x="edad", hue="falta_pago", bins=30, kde=True)
+    plt.title("Distribución de edad según mora")
+    plt.xlabel("Edad")
+    plt.ylabel("Frecuencia")
+    plt.savefig(output_dir / "edad_vs_mora.png")
+    plt.close()
+
+    # Gráfico de ingresos vs mora
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(x="falta_pago", y="ingresos", data=df_creditos)
+    plt.title("Ingresos vs mora")
+    plt.savefig(output_dir / "ingresos_vs_mora.png")
+    plt.close()
+
+    # Generación del reporte automático con ydata-profiling
+    profile = ProfileReport(df_creditos, title="Reporte de Créditos", explorative=True)
+    profile.to_file(output_dir / "reporte_creditos.html")
+
+    profile_tarjetas = ProfileReport(df_tarjetas, title="Reporte de Tarjetas", explorative=True)
+    profile_tarjetas.to_file(output_dir / "reporte_tarjetas.html")
+
 
 
 if __name__ == "__main__":
