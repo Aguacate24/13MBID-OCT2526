@@ -13,8 +13,8 @@ stages:
       size: 845190
     - path: src/data_visualization.py
       hash: md5
-      md5: eb97f80018f935ecb35e49d63bc5097b
-      size: 3296
+      md5: 4cc9da3e540ff3a6ec38953cf669528e
+      size: 3430
     outs:
     - path: docs/figures/correlation_heatmap_creditos.png
       hash: md5
@@ -28,6 +28,14 @@ stages:
       hash: md5
       md5: 103ed490582e63d18653cece13747409
       size: 21596
+    - path: docs/reporte_creditos.html
+      hash: md5
+      md5: 0b958db583425ca4cfe0a5de12c408d4
+      size: 3824566
+    - path: docs/reporte_tarjetas.html
+      hash: md5
+      md5: e67b7c89eb7aadcfe6db2fbc184b7e3f
+      size: 3048901
   test_pandera:
     cmd: pytest --html=docs/report_basico.html --self-contained-html 
       test/test_data_quality.py -v || ver
@@ -70,3 +78,27 @@ stages:
       hash: md5
       md5: ef5b26a0fb54f1b357d69b02e45cacf2
       size: 43081
+  data_processing:
+    cmd: python src/data_prep.py
+    deps:
+    - path: data/raw/datos_creditos.csv
+      hash: md5
+      md5: 3b26edd22e8827f890d7cd32efe475b7
+      size: 663047
+    - path: data/raw/datos_tarjetas.csv
+      hash: md5
+      md5: 9e197c893925601cd447c81256e8cf07
+      size: 845190
+    - path: src/data_prep.py
+      hash: md5
+      md5: 10cd96573165e2c5b13e65d8458c7f73
+      size: 4828
+    outs:
+    - path: data/processed/datos_integrados.csv
+      hash: md5
+      md5: f65011065e3c5135c7a55348af58ba48
+      size: 2064944
+    - path: docs/reporte_preprocesado.html
+      hash: md5
+      md5: 8a6d53bb370e635f31e9ccb89c441159
+      size: 14529344
