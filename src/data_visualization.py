@@ -7,7 +7,8 @@ from ydata_profiling import ProfileReport
 
 def visualize_data(datos_creditos: str = "data/raw/datos_creditos.csv",
                     datos_tarjetas: str = "data/raw/datos_tarjetas.csv",
-                    output_dir: str = "docs/figures/") -> None:
+                    output_dir: str = "docs/figures/",
+                    report_dir: str = "docs/") -> None:
     """
     Generar visualizaciones de los datos del escenario
     mediante gráficos de Seaborn y Matplotlib.
@@ -79,7 +80,7 @@ def visualize_data(datos_creditos: str = "data/raw/datos_creditos.csv",
     profile.to_file(output_dir / "reporte_creditos.html")
 
     profile_tarjetas = ProfileReport(df_tarjetas, title="Reporte de Tarjetas", explorative=True)
-    profile_tarjetas.to_file(output_dir / "reporte_tarjetas.html")
+    profile_tarjetas.to_file(report_dir / "reporte_tarjetas.html")
 
 
 

@@ -9,6 +9,10 @@ stages:
       - docs/figures/target_distribution.png
       - docs/figures/correlation_heatmap_creditos.png
       - docs/figures/correlation_heatmap_tarjetas.png
+      - docs/reporte_creditos.html
+      - docs/reporte_tarjetas.html
+      
+
 
   test_pandera:
     cmd: pytest --html=docs/report_basico.html --self-contained-html test/test_data_quality.py -v || ver
@@ -27,3 +31,13 @@ stages:
       - test/test_data_quality_ge.py
     outs:
       - docs/report_ge.html
+
+  data_processing:
+    cmd: python src/data_prep.py
+    deps:
+      - src/data_prep.py
+      - data/raw/datos_creditos.csv
+      - data/raw/datos_tarjetas.csv
+    outs:
+      - data/processed/datos_integrados.csv
+      - docs/reporte_preprocesado.html
