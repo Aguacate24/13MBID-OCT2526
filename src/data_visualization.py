@@ -24,6 +24,8 @@ def visualize_data(datos_creditos: str = "data/raw/datos_creditos.csv",
     # Crear el directorio de salida si no existe
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    report_dir = Path(report_dir)
+    report_dir.mkdir(parents=True, exist_ok=True)
     
     # Lectura de los datos
     df_creditos = pd.read_csv(datos_creditos, sep=";")
@@ -77,7 +79,7 @@ def visualize_data(datos_creditos: str = "data/raw/datos_creditos.csv",
 
     # Generación del reporte automático con ydata-profiling
     profile = ProfileReport(df_creditos, title="Reporte de Créditos", explorative=True)
-    profile.to_file(output_dir / "reporte_creditos.html")
+    profile.to_file(report_dir / "reporte_creditos.html")
 
     profile_tarjetas = ProfileReport(df_tarjetas, title="Reporte de Tarjetas", explorative=True)
     profile_tarjetas.to_file(report_dir / "reporte_tarjetas.html")
